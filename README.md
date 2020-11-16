@@ -1,2 +1,2 @@
 # ZarMaraphon
- Learn JavaScript in ZarMaraphon
+ Learn JavaScript in ZarMarathon
