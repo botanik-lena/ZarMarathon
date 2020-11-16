@@ -1,8 +1,8 @@
 /* Задача 1 */
 
-// let firstRow = prompt("Введите первую строку");
-// let secondRow = prompt("Введите вторую строку");
-// let letter = prompt("Какую букву будем считать?")
+let firstRow = prompt("Введите первую строку");
+let secondRow = prompt("Введите вторую строку");
+let letter = prompt("Какую букву будем считать?")
 
 function getRow(firstRow, secondRow) {
     let firstCount = 0;
@@ -41,9 +41,9 @@ function getRow(firstRow, secondRow) {
     }
 }
 
-// alert(`Букв "${letter}" больше в строке: "${getRow(firstRow, secondRow)}"`);
+alert(`Букв "${letter}" больше в строке: "${getRow(firstRow, secondRow)}"`);
 
-// console.log(getRow(firstRow, secondRow));
+console.log(getRow(firstRow, secondRow));
 
 
 /* Задача 2 */
