@@ -139,7 +139,8 @@ function discharge() {
     this.renderHP();
 }
 
-function generateLog(firstPerson, secondPerson, loss) {        //loss -  потеря
+//Генерация описания действий в бою
+function generateLog(firstPerson, secondPerson, loss) {        //loss - потеря
     let firstDm = firstPerson.damageHP;
     let firstDf = firstPerson.defaultHP;
 
