@@ -31,74 +31,85 @@ const enemy = {
     renderProgressbarHP,
     discharge,
 }
-
-//Обработка атаки в зависимости от id нажатой кнопки
-function attack(buttonId) {
+//Обработчик кнопки Thunder Jolt
+function attackThunderJolt() {
     let count = 0;
     let balance = 10;
 
-    //Кнопка ударит двоих сразу
-    if (buttonId === "btn-kick") {
-        return function () {
-            count++;
-            balance--;
-            character.changeHP(random(40));
-            enemy.changeHP(random(40));
-            console.log("Kick!");
+    return function () {
+        count++;
+        balance--;
+        character.changeHP(random(40));
+        enemy.changeHP(random(40));
+        console.log("Kick!");
 
-            if (balance === 0) {
-                $btn.disabled = true;
-            }
-            console.log(count + " Thunder Jolt!");
-            console.log(`Осталось ${balance} нажатий на кнопку Thunder Jolt`);
-            document.querySelector(`#${buttonId}`).innerText = "Thunder Jolt " + balance;
+        if (balance === 0) {
+            $btn.disabled = true;
         }
+        console.log(count + " Thunder Jolt!");
+        console.log(`Осталось ${balance} нажатий на кнопку Thunder Jolt`);
+        document.querySelector("#btn-kick").innerText = "Thunder Jolt " + balance;
     }
-    //Кнопка ударит врага
-    else if (buttonId === "btn-discharge") {
-        return function () {
-            count++;
-            balance--;
+}
+const attack1 = attackThunderJolt();
+
+//Кнопка Thunder Jolt ударит двоих сразу
+$btn.addEventListener("click", attack1);
+
+
+//Обработчик кнопки Discharge
+function attackDischarge() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        count++;
+        balance--;
+        enemy.discharge();
+        if (balance === 0) {
+            $btnDischarge.disabled = true;
+        }
+        console.log(count + " Discharge!");
+        console.log(`Осталось ${balance} нажатий на кнопку Discharge`);
+        document.querySelector("#btn-discharge").innerText = "Discharge " + balance;
+    }
+}
+const attack2 = attackDischarge();
+
+//Кнопка Discharge ударит врага
+$btnDischarge.addEventListener("click", attack2);
+
+
+//Обработчик кнопки Randomize 
+function attackRandomize() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        balance = 0;
+        let ran = random(30);
+
+        if (ran > 15) {
             enemy.discharge();
-            if (balance === 0) {
-                $btnDischarge.disabled = true;
-            }
-            console.log(count + " Discharge!");
-            console.log(`Осталось ${balance} нажатий на кнопку Discharge`);
-            document.querySelector(`#${buttonId}`).innerText = "Discharge " + balance;
+            console.log("Luck smiled at Pikachu");
         }
-    }
-    // Кнопка рандомного выбора удара
-    else if (buttonId === "btn-randomize") {
-        return function () {
-            balance = 0;
-            let ran = random(30);
-
-            if (ran > 15) {
-                enemy.discharge();
-                console.log("Luck smiled at Pikachu");
-            }
-            else if (ran < 15) {
-                character.changeHP(random(15));
-                console.log("Luck smiled at Charmander");
-            }
-            else {
-                console.log("Lucky to all pokemon");
-            }
-
-            document.querySelector(`#${buttonId}`).innerText = "Randomize " + balance;
-            $btnRandomize.disabled = true;
+        else if (ran < 15) {
+            character.changeHP(random(15));
+            console.log("Luck smiled at Charmander");
         }
+        else {
+            console.log("Lucky to all pokemon");
+        }
+
+        document.querySelector("#btn-randomize").innerText = "Randomize " + balance;
+        $btnRandomize.disabled = true;
     }
 }
-// Вешаем обработчик на все кнопки в цикле
-{
-    let buttons = document.querySelectorAll("button");
 
-    for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", attack(buttons[i].id));
-    }
-}
+const attack3 = attackRandomize();
+
+//Кнопка рандомного выбора удара
+$btnRandomize.addEventListener("click", attack3);
 
 //Удар Thunder Jolt
 function changeHP(count) {
