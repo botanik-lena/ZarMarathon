@@ -15,6 +15,25 @@ class Pokemon extends Selectors {
             damageHP: hp,
         };
         this.type = type;
+
+        this.renderHP();
+    }
+
+    renderHP() {
+        this.renderHPLife();
+        this.renderProgressbarHP();
+    }
+
+    renderHPLife() {
+        const { elHP, hp: { defaultHP, damageHP } } = this;
+
+        elHP.innerText = damageHP + " / " + defaultHP;
+    }
+
+    renderProgressbarHP() {
+        const { elProgressbar, hp: { defaultHP, damageHP } } = this;
+
+        elProgressbar.style.width = ((damageHP / defaultHP) * 100) + "%";
     }
 }
 

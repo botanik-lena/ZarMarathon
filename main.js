@@ -20,17 +20,17 @@ const $btn = $getElById("btn-kick");
 const $btnDischarge = $getElById("btn-discharge");
 const $btnRandomize = $getElById("btn-randomize");
 
-const character = {
-    name: "Pikachu",
-    defaultHP: 200,
-    damageHP: 200,
-    elHP: $getElById("health-character"),
-    elProgressbar: $getElById("progressbar-character"),
-    changeHP,
-    renderHP,
-    renderHPLife,
-    renderProgressbarHP,
-}
+// const character = {
+//     name: "Pikachu",
+//     defaultHP: 200,
+//     damageHP: 200,
+//     elHP: $getElById("health-character"),
+//     elProgressbar: $getElById("progressbar-character"),
+//     changeHP,
+//     renderHP,
+//     renderHPLife,
+//     renderProgressbarHP,
+// }
 
 const enemy = {
     name: "Charmander",
@@ -52,7 +52,7 @@ function attackThunderJolt() {
     return function () {
         count++;
         balance--;
-        character.changeHP(random(40));
+        // character.changeHP(random(40));
         enemy.changeHP(random(40));
         console.log("Kick!");
 
@@ -107,7 +107,7 @@ function attackRandomize() {
             console.log("Luck smiled at Pikachu");
         }
         else if (ran < 15) {
-            character.changeHP(random(15));
+            // character.changeHP(random(15));
             console.log("Luck smiled at Charmander");
         }
         else {
@@ -170,7 +170,7 @@ function discharge() {
 //Отображение конкретных игроков
 function init() {
     console.log("Start Game!");
-    character.renderHP();
+    // character.renderHP();
     enemy.renderHP();
 }
 
