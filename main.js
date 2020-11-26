@@ -1,4 +1,15 @@
+import Pokemon from "./Pokemon.js";
 import random from "./random.js";
+
+const player1 = new Pokemon({
+    name: "Pikachu",
+    type: "electric",
+    hp: 200,
+    selectors: "character",
+});
+console.log(player1);
+
+
 
 function $getElById(id) {
     return document.getElementById(id);
