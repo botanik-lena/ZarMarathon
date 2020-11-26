@@ -9,41 +9,24 @@ const player1 = new Pokemon({
 });
 console.log(player1);
 
+const player2 = new Pokemon({
+    name: "Charmander",
+    type: "fire",
+    hp: 200,
+    selectors: "enemy",
+});
+console.log(player2);
 
 
 function $getElById(id) {
     return document.getElementById(id);
 }
 
-
 const $btn = $getElById("btn-kick");
 const $btnDischarge = $getElById("btn-discharge");
 const $btnRandomize = $getElById("btn-randomize");
 
-// const character = {
-//     name: "Pikachu",
-//     defaultHP: 200,
-//     damageHP: 200,
-//     elHP: $getElById("health-character"),
-//     elProgressbar: $getElById("progressbar-character"),
-//     changeHP,
-//     renderHP,
-//     renderHPLife,
-//     renderProgressbarHP,
-// }
 
-const enemy = {
-    name: "Charmander",
-    defaultHP: 200,
-    damageHP: 200,
-    elHP: $getElById("health-enemy"),
-    elProgressbar: $getElById("progressbar-enemy"),
-    changeHP,
-    renderHP,
-    renderHPLife,
-    renderProgressbarHP,
-    discharge,
-}
 //Обработчик кнопки Thunder Jolt
 function attackThunderJolt() {
     let count = 0;
@@ -52,9 +35,17 @@ function attackThunderJolt() {
     return function () {
         count++;
         balance--;
-        // character.changeHP(random(40));
-        enemy.changeHP(random(40));
-        console.log("Kick!");
+
+        player1.changeHP(random(40), function (count) {
+            const log = generateLog(player1, player2, count);
+            console.log(log);
+            if (player1.hp.damageHP === 0) disable();
+        });
+        player2.changeHP(random(40), function (count) {
+            const log = generateLog(player2, player1, count);
+            console.log(log);
+            if (player2.hp.damageHP === 0) disable();
+        });
 
         if (balance === 0) {
             $btn.disabled = true;
@@ -78,7 +69,7 @@ function attackDischarge() {
     return function () {
         count++;
         balance--;
-        enemy.discharge();
+        player2.discharge();
         if (balance === 0) {
             $btnDischarge.disabled = true;
         }
@@ -103,7 +94,7 @@ function attackRandomize() {
         let ran = random(30);
 
         if (ran > 15) {
-            enemy.discharge();
+            player2.discharge();
             console.log("Luck smiled at Pikachu");
         }
         else if (ran < 15) {
@@ -124,37 +115,20 @@ const attack3 = attackRandomize();
 //Кнопка рандомного выбора удара
 $btnRandomize.addEventListener("click", attack3);
 
-//Удар Thunder Jolt
-function changeHP(count) {
-    this.damageHP -= count;
-
-    const log = this === enemy ? generateLog(this, character, count) : generateLog(this, enemy, count);
-    console.log(log);
-    createLog(log);
-
-    if (this.damageHP <= 0) {
-        this.damageHP = 0;
-        alert(`Бедный ${this.name} проиграл бой`);
-        $btn.disabled = true;
-        $btnDischarge.disabled = true;
-    }
-
-    this.renderHP();
-}
 
 //Функция удара в зависимости от кол-ва букв в name игрока
 function discharge() {
     if ((this.name.length % 2 === 0) && (this.damageHP > 10)) {
         this.damageHP -= 10;
 
-        const log = this === enemy ? generateLog(this, character, 10) : generateLog(this, enemy, count);
+        const log = this === player2 ? generateLog(this, player1, 10) : generateLog(this, player2, count);
         console.log(log);
         createLog(log);
     }
     else if (this.damageHP > 19) {
         this.damageHP -= 19;
 
-        const log = this === enemy ? generateLog(this, character, 19) : generateLog(this, enemy, count);
+        const log = this === player2 ? generateLog(this, player1, 19) : generateLog(this, player2, count);
         console.log(log);
         createLog(log);
     }
@@ -167,29 +141,10 @@ function discharge() {
 
     this.renderHP();
 }
-//Отображение конкретных игроков
+//Запуск игры
 function init() {
     console.log("Start Game!");
-    // character.renderHP();
-    enemy.renderHP();
 }
-
-//Отображение жизни и прогрессбара
-function renderHP() {
-    this.renderHPLife();
-    this.renderProgressbarHP();
-}
-
-//Отрисовка жизни
-function renderHPLife() {
-    this.elHP.innerText = this.damageHP + " / " + this.defaultHP;
-}
-
-//Отрисовка прогрессбара
-function renderProgressbarHP() {
-    this.elProgressbar.style.width = ((this.damageHP / this.defaultHP) * 100) + "%";
-}
-
 
 //Запись действий боя в новые параграфы, где верхний параграф - последнее действие
 function createLog(log) {
@@ -203,8 +158,8 @@ function createLog(log) {
 
 //Генерация описания действий в бою
 function generateLog(firstPerson, secondPerson, loss) {        //loss - потеря
-    let firstDm = firstPerson.damageHP;
-    let firstDf = firstPerson.defaultHP;
+    let firstDm = firstPerson.hp.damageHP;
+    let firstDf = firstPerson.hp.defaultHP;
 
     const logs = [
         `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. -${loss} [${firstDm}/${firstDf}]`,
@@ -220,6 +175,12 @@ function generateLog(firstPerson, secondPerson, loss) {        //loss - поте
     ];
 
     return logs[random(logs.length) - 1];
+}
+
+function disable() {
+    $btn.disabled = true;
+    $btnDischarge.disabled = true;
+    $btnRandomize.disabled = true;
 }
 
 //Запуск игры
