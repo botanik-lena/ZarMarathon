@@ -1,3 +1,5 @@
+import random from "./random.js";
+
 function $getElById(id) {
     return document.getElementById(id);
 }
@@ -177,10 +179,6 @@ function renderProgressbarHP() {
     this.elProgressbar.style.width = ((this.damageHP / this.defaultHP) * 100) + "%";
 }
 
-//Получение случайного числа от 0 до num
-function random(num) {
-    return Math.ceil(Math.random() * num);
-}
 
 //Запись действий боя в новые параграфы, где верхний параграф - последнее действие
 function createLog(log) {
