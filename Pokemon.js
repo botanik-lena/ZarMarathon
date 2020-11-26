@@ -52,6 +52,18 @@ class Pokemon extends Selectors {
         }
     }
 
+    //Удар Splash
+    splash() {
+        this.hp.damageHP -= 23;
+
+        if (this.hp.damageHP <= 0) {
+            this.hp.damageHP = 0;
+            alert(`Бедный ${this.name} проиграл бой`);
+        }
+
+        this.renderHP();
+    }
+
     //Отображение жизни и прогрессбара
     renderHP() {
         this.renderHPLife();

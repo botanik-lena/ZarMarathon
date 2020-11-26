@@ -26,6 +26,7 @@ function $getElById(id) {
 const $btn = $getElById("btn-kick");
 const $btnDischarge = $getElById("btn-discharge");
 const $btnRandomize = $getElById("btn-randomize");
+const $btnSplash = $getElById("btn-splash");
 
 
 //Обработчик кнопки Thunder Jolt
@@ -134,10 +135,46 @@ function attackRandomize() {
     }
 }
 
-
 //Кнопка рандомного выбора удара
 const attack3 = attackRandomize();
 $btnRandomize.addEventListener("click", attack3);
+
+//Обработчик Splash
+function attackSplash() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        count++;
+        balance--;
+        let result = prompt("1 - ударить первого игрока, 2 - ударить второго игрока");
+
+
+        if (result == 1) {
+            player1.splash();
+            const log = generateLog(player1, player2, count);
+            createLog(log);
+            console.log(log);
+            if (player1.hp.damageHP === 0) disable();
+        }
+        else if (result == 2) {
+            player2.splash();
+            const log = generateLog(player2, player1, count);
+            createLog(log);
+            console.log(log);
+            if (player2.hp.damageHP === 0) disable();
+        }
+        else {
+            console.log("Вы ввели неверный номер игрока");
+        }
+
+    }
+}
+
+//Кнопка Splash
+const attack4 = attackSplash();
+$btnSplash.addEventListener("click", attack4);
+
 
 //Запись действий боя в новые параграфы, где верхний параграф - последнее действие
 function createLog(log) {
