@@ -32,6 +32,26 @@ class Pokemon extends Selectors {
         logF && logF(count);
     }
 
+    //Функция удара в зависимости от кол-ва букв в name игрока
+    discharge() {
+        const a = 10;
+        const b = 19;
+
+        if ((this.name.length % 2 === 0) && (this.hp.damageHP > 10)) {
+            this.hp.damageHP -= a;
+            this.renderHP();
+
+            return a;
+        }
+
+        else if (this.hp.damageHP > 19) {
+            this.hp.damageHP -= b;
+            this.renderHP();
+
+            return b;
+        }
+    }
+
     //Отображение жизни и прогрессбара
     renderHP() {
         this.renderHPLife();

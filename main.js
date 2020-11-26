@@ -1,6 +1,7 @@
 import Pokemon from "./Pokemon.js";
 import random from "./random.js";
 
+//Создание игроков
 const player1 = new Pokemon({
     name: "Pikachu",
     type: "electric",
@@ -17,7 +18,7 @@ const player2 = new Pokemon({
 });
 console.log(player2);
 
-
+//Объявление кнопок
 function $getElById(id) {
     return document.getElementById(id);
 }
@@ -38,11 +39,14 @@ function attackThunderJolt() {
 
         player1.changeHP(random(40), function (count) {
             const log = generateLog(player1, player2, count);
+            createLog(log);
             console.log(log);
             if (player1.hp.damageHP === 0) disable();
         });
+
         player2.changeHP(random(40), function (count) {
             const log = generateLog(player2, player1, count);
+            createLog(log);
             console.log(log);
             if (player2.hp.damageHP === 0) disable();
         });
@@ -55,9 +59,9 @@ function attackThunderJolt() {
         document.querySelector("#btn-kick").innerText = "Thunder Jolt " + balance;
     }
 }
-const attack1 = attackThunderJolt();
 
 //Кнопка Thunder Jolt ударит двоих сразу
+const attack1 = attackThunderJolt();
 $btn.addEventListener("click", attack1);
 
 
@@ -69,18 +73,27 @@ function attackDischarge() {
     return function () {
         count++;
         balance--;
-        player2.discharge();
+
+        const dis = player2.discharge();    //чтобы получить размер урона
+        const log = generateLog(player2, player1, dis);
+        createLog(log);
+        console.log(log);
+
+        if (player2.hp.damageHP === 0) disable();
+
         if (balance === 0) {
             $btnDischarge.disabled = true;
         }
+
         console.log(count + " Discharge!");
         console.log(`Осталось ${balance} нажатий на кнопку Discharge`);
         document.querySelector("#btn-discharge").innerText = "Discharge " + balance;
     }
 }
-const attack2 = attackDischarge();
+
 
 //Кнопка Discharge ударит врага
+const attack2 = attackDischarge();
 $btnDischarge.addEventListener("click", attack2);
 
 
@@ -110,41 +123,10 @@ function attackRandomize() {
     }
 }
 
-const attack3 = attackRandomize();
 
 //Кнопка рандомного выбора удара
+const attack3 = attackRandomize();
 $btnRandomize.addEventListener("click", attack3);
-
-
-//Функция удара в зависимости от кол-ва букв в name игрока
-function discharge() {
-    if ((this.name.length % 2 === 0) && (this.damageHP > 10)) {
-        this.damageHP -= 10;
-
-        const log = this === player2 ? generateLog(this, player1, 10) : generateLog(this, player2, count);
-        console.log(log);
-        createLog(log);
-    }
-    else if (this.damageHP > 19) {
-        this.damageHP -= 19;
-
-        const log = this === player2 ? generateLog(this, player1, 19) : generateLog(this, player2, count);
-        console.log(log);
-        createLog(log);
-    }
-    else {
-        this.damageHP = 0;
-        alert(`Бедный ${this.name} проиграл бой`);
-        $btnDischarge.disabled = true;
-        $btn.disabled = true;
-    }
-
-    this.renderHP();
-}
-//Запуск игры
-function init() {
-    console.log("Start Game!");
-}
 
 //Запись действий боя в новые параграфы, где верхний параграф - последнее действие
 function createLog(log) {
@@ -177,6 +159,7 @@ function generateLog(firstPerson, secondPerson, loss) {        //loss - поте
     return logs[random(logs.length) - 1];
 }
 
+//Функция отключения всех кнопок
 function disable() {
     $btn.disabled = true;
     $btnDischarge.disabled = true;
@@ -184,5 +167,7 @@ function disable() {
 }
 
 //Запуск игры
-init();
+(function init() {
+    console.log("Start Game!");
+})();
 
