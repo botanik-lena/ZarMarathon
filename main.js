@@ -29,6 +29,8 @@ const $btnRandomize = $getElById("btn-randomize");
 const $btnSplash = $getElById("btn-splash");
 
 
+//Рефакторинг, мне кажется только усложнил программу. Что стоит улучшить в моём коде, на Ваш взгляд?
+
 //Обработчик кнопки Thunder Jolt
 function attackThunderJolt() {
     let count = 0;

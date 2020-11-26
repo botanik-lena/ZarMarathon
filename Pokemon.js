@@ -20,7 +20,7 @@ class Pokemon extends Selectors {
     }
 
     //Удар Thunder Jolt
-    changeHP(count, logF) {
+    changeHP(count, logF) {     //changeHP = () => - вот так почему-то не работает (в Safari) и в некоторых других браузерах
         this.hp.damageHP -= count;
 
         if (this.hp.damageHP <= 0) {
