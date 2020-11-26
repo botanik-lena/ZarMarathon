@@ -91,7 +91,6 @@ function attackDischarge() {
     }
 }
 
-
 //Кнопка Discharge ударит врага
 const attack2 = attackDischarge();
 $btnDischarge.addEventListener("click", attack2);
@@ -107,11 +106,23 @@ function attackRandomize() {
         let ran = random(30);
 
         if (ran > 15) {
-            player2.discharge();
+            const dis = player2.discharge();    //чтобы получить размер урона
+            const log = generateLog(player2, player1, dis);
+            createLog(log);
+            console.log(log);
+
+            if (player2.hp.damageHP === 0) disable();
             console.log("Luck smiled at Pikachu");
         }
         else if (ran < 15) {
-            // character.changeHP(random(15));
+            player1.changeHP(random(55), function (count) {
+                const log = generateLog(player1, player2, count);
+                createLog(log);
+                console.log(log);
+
+                if (player1.hp.damageHP === 0) disable();
+            });
+
             console.log("Luck smiled at Charmander");
         }
         else {
