@@ -1,5 +1,5 @@
 import Pokemon from "./Pokemon.js";
-import random from "./random.js";
+import random from "./utils.js";
 
 //Создание игроков
 const player1 = new Pokemon({
