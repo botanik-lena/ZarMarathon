@@ -1,104 +1,223 @@
-const $btn = document.getElementById("btn-kick");
-const $btnDischarge = document.getElementById("btn-discharge");
-const $btnRandomize = document.getElementById("btn-randomize");
+import Pokemon from "./Pokemon.js";
+import random from "./utils.js";
 
-const character = {
+//Создание игроков
+const player1 = new Pokemon({
     name: "Pikachu",
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById("health-character"),
-    elProgressbar: document.getElementById("progressbar-character"),
-}
+    type: "electric",
+    hp: 200,
+    selectors: "character",
+});
+console.log(player1);
 
-const enemy = {
+const player2 = new Pokemon({
     name: "Charmander",
-    defaultHP: 100,
-    damageHP: 100,
-    elHP: document.getElementById("health-enemy"),
-    elProgressbar: document.getElementById("progressbar-enemy"),
+    type: "fire",
+    hp: 200,
+    selectors: "enemy",
+});
+console.log(player2);
+
+//Объявление кнопок
+function $getElById(id) {
+    return document.getElementById(id);
 }
 
-$btn.addEventListener("click", () => {
-    console.log("Kick!");
-    changeHP(random(20), character);
-    changeHP(random(20), enemy);
-});
+const $btn = $getElById("btn-kick");
+const $btnDischarge = $getElById("btn-discharge");
+const $btnRandomize = $getElById("btn-randomize");
+const $btnSplash = $getElById("btn-splash");
 
-$btnDischarge.addEventListener("click", () => {
-    console.log("Discharge!");
-    discharge(enemy);
-});
 
-$btnRandomize.addEventListener("click", () => {
-    let ran = random(30);
-    if (ran > 15) {
-        discharge(enemy);
-        console.log("Luck smiled at Pikachu");
+//Рефакторинг, мне кажется только усложнил программу. Что стоит улучшить в моём коде, на Ваш взгляд?
+
+//Обработчик кнопки Thunder Jolt
+function attackThunderJolt() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        count++;
+        balance--;
+
+        player1.changeHP(random(40), function (count) {
+            const log = generateLog(player1, player2, count);
+            createLog(log);
+            console.log(log);
+            if (player1.hp.damageHP === 0) disable();
+        });
+
+        player2.changeHP(random(40), function (count) {
+            const log = generateLog(player2, player1, count);
+            createLog(log);
+            console.log(log);
+            if (player2.hp.damageHP === 0) disable();
+        });
+
+        if (balance === 0) {
+            $btn.disabled = true;
+        }
+        console.log(count + " Thunder Jolt!");
+        console.log(`Осталось ${balance} нажатий на кнопку Thunder Jolt`);
+        document.querySelector("#btn-kick").innerText = "Thunder Jolt " + balance;
     }
-    else if (ran < 15) {
-        changeHP(random(15), character);
-        console.log("Luck smiled at Charmander");
+}
+
+//Кнопка Thunder Jolt ударит двоих сразу
+const attack1 = attackThunderJolt();
+$btn.addEventListener("click", attack1);
+
+
+//Обработчик кнопки Discharge
+function attackDischarge() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        count++;
+        balance--;
+
+        const dis = player2.discharge();    //чтобы получить размер урона
+        const log = generateLog(player2, player1, dis);
+        createLog(log);
+        console.log(log);
+
+        if (player2.hp.damageHP === 0) disable();
+
+        if (balance === 0) {
+            $btnDischarge.disabled = true;
+        }
+
+        console.log(count + " Discharge!");
+        console.log(`Осталось ${balance} нажатий на кнопку Discharge`);
+        document.querySelector("#btn-discharge").innerText = "Discharge " + balance;
     }
-    else {
-        console.log("Lucky to all pokemon");
+}
+
+//Кнопка Discharge ударит врага
+const attack2 = attackDischarge();
+$btnDischarge.addEventListener("click", attack2);
+
+
+//Обработчик кнопки Randomize 
+function attackRandomize() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        balance = 0;
+        let ran = random(30);
+
+        if (ran > 15) {
+            const dis = player2.discharge();    //чтобы получить размер урона
+            const log = generateLog(player2, player1, dis);
+            createLog(log);
+            console.log(log);
+
+            if (player2.hp.damageHP === 0) disable();
+            console.log("Luck smiled at Pikachu");
+        }
+        else if (ran < 15) {
+            player1.changeHP(random(55), function (count) {
+                const log = generateLog(player1, player2, count);
+                createLog(log);
+                console.log(log);
+
+                if (player1.hp.damageHP === 0) disable();
+            });
+
+            console.log("Luck smiled at Charmander");
+        }
+        else {
+            console.log("Lucky to all pokemon");
+        }
+
+        document.querySelector("#btn-randomize").innerText = "Randomize " + balance;
+        $btnRandomize.disabled = true;
     }
+}
+
+//Кнопка рандомного выбора удара
+const attack3 = attackRandomize();
+$btnRandomize.addEventListener("click", attack3);
+
+//Обработчик Splash
+function attackSplash() {
+    let count = 0;
+    let balance = 10;
+
+    return function () {
+        count++;
+        balance--;
+        let result = prompt("1 - ударить первого игрока, 2 - ударить второго игрока");
+
+
+        if (result == 1) {
+            player1.splash();
+            const log = generateLog(player1, player2, count);
+            createLog(log);
+            console.log(log);
+            if (player1.hp.damageHP === 0) disable();
+        }
+        else if (result == 2) {
+            player2.splash();
+            const log = generateLog(player2, player1, count);
+            createLog(log);
+            console.log(log);
+            if (player2.hp.damageHP === 0) disable();
+        }
+        else {
+            console.log("Вы ввели неверный номер игрока");
+        }
+
+    }
+}
+
+//Кнопка Splash
+const attack4 = attackSplash();
+$btnSplash.addEventListener("click", attack4);
+
+
+//Запись действий боя в новые параграфы, где верхний параграф - последнее действие
+function createLog(log) {
+    const $logs = document.querySelector("#logs");
+
+    const $p = document.createElement("p");
+    $p.innerHTML = log;
+    $logs.insertBefore($p, $logs.children[0]);
+
+}
+
+//Генерация описания действий в бою
+function generateLog(firstPerson, secondPerson, loss) {        //loss - потеря
+    let firstDm = firstPerson.hp.damageHP;
+    let firstDf = firstPerson.hp.defaultHP;
+
+    const logs = [
+        `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, не помня себя от испуга, ударил в предплечье врага. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} с испугу приложил прямой удар коленом в лоб врага. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} забылся, но в это время наглый ${secondPerson.name}, приняв волевое решение, неслышно подойдя сзади, ударил. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} случайно нанес мощнейший удар. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} нехотя раздробил кулаком \<вырезанно цензурой\> противника. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} пошатнулся, и внезапно наглый ${secondPerson.name} беспричинно ударил в ногу противника. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} случайно влепил стопой в живот соперника. -${loss} [${firstDm}/${firstDf}]`,
+        `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. -${loss} [${firstDm}/${firstDf}]`
+    ];
+
+    return logs[random(logs.length) - 1];
+}
+
+//Функция отключения всех кнопок
+function disable() {
+    $btn.disabled = true;
+    $btnDischarge.disabled = true;
     $btnRandomize.disabled = true;
-});
+}
 
-function init() {
+//Запуск игры
+(function init() {
     console.log("Start Game!");
-    renderHP(character);
-    renderHP(enemy);
-}
-
-function renderHP(person) {
-    renderHPLife(person);
-    renderProgressbarHP(person);
-}
-
-function renderHPLife(person) {
-    person.elHP.innerText = person.damageHP + " / " + person.defaultHP;
-}
-
-function renderProgressbarHP(person) {
-    person.elProgressbar.style.width = person.damageHP + "%";
-}
-
-function changeHP(count, person) {
-    if (person.damageHP < count) {
-        person.damageHP = 0;
-        alert("Бедный " + person.name + " проиграл бой!");
-        $btn.disabled = true;
-        $btnDischarge.disabled = true;
-    }
-    else {
-        person.damageHP -= count;
-    }
-
-    renderHP(person);
-}
-
-function random(num) {
-    return Math.ceil(Math.random() * num);
-}
-
-function discharge(person) {
-    if ((person.name.length % 2 == 0) && (person.damageHP > 10)) {
-        person.damageHP -= 10;
-    }
-    else if (person.damageHP > 19) {
-        person.damageHP -= 19;
-    }
-    else {
-        person.damageHP = 0;
-        alert("Бедный " + person.name + " проиграл бой!");
-        $btnDischarge.disabled = true;
-        $btn.disabled = true;
-    }
-
-
-    renderHP(person);
-}
-
-init();
+})();
 
