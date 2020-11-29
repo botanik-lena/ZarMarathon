@@ -6,25 +6,25 @@ export const pokemons = [
         img: 'http://sify4321.000webhostapp.com/pikachu.png',
         attacks: [
             {
-                name: "thunder jolt",
+                name: "Thunder jolt",
                 maxDamage: 40,
                 minDamage: 20,
                 maxCount: 100,
             },
             {
-                name: "electro ball",
+                name: "Electro ball",
                 maxDamage: 60,
                 minDamage: 45,
                 maxCount: 6,
             },
             {
-                name: "volt tackle",
+                name: "Volt tackle",
                 maxDamage: 75,
                 minDamage: 60,
                 maxCount: 4,
             },
             {
-                name: "thunder crack",
+                name: "Thunder crack",
                 maxDamage: 160,
                 minDamage: 130,
                 maxCount: 2,
@@ -38,25 +38,25 @@ export const pokemons = [
         hp: 282,
         attacks: [
             {
-                name: "ember",
+                name: "Ember",
                 maxDamage: 40,
                 minDamage: 20,
                 maxCount: 100,
             },
             {
-                name: "flamethrower",
+                name: "Flamethrower",
                 maxDamage: 60,
                 minDamage: 45,
                 maxCount: 6,
             },
             {
-                name: "burning tail",
+                name: "Burning tail",
                 maxDamage: 75,
                 minDamage: 60,
                 maxCount: 4,
             },
             {
-                name: "fire spin",
+                name: "Fire spin",
                 maxDamage: 130,
                 minDamage: 110,
                 maxCount: 2,
@@ -70,25 +70,25 @@ export const pokemons = [
         hp: 294,
         attacks: [
             {
-                name: "tackle",
+                name: "Tackle",
                 maxDamage: 40,
                 minDamage: 20,
                 maxCount: 100,
             },
             {
-                name: "vine whip",
+                name: "Vine whip",
                 maxDamage: 60,
                 minDamage: 45,
                 maxCount: 6,
             },
             {
-                name: "razor leaf",
+                name: "Razor leaf",
                 maxDamage: 75,
                 minDamage: 60,
                 maxCount: 4,
             },
             {
-                name: "solar beam",
+                name: "Solar beam",
                 maxDamage: 130,
                 minDamage: 110,
                 maxCount: 2,
@@ -102,25 +102,25 @@ export const pokemons = [
         hp: 292,
         attacks: [
             {
-                name: "bubble",
+                name: "Bubble",
                 maxDamage: 40,
                 minDamage: 20,
                 maxCount: 100,
             },
             {
-                name: "water gun",
+                name: "Water gun",
                 maxDamage: 60,
                 minDamage: 45,
                 maxCount: 6,
             },
             {
-                name: "shell attack",
+                name: "Shell attack",
                 maxDamage: 75,
                 minDamage: 60,
                 maxCount: 4,
             },
             {
-                name: "hydro pump",
+                name: "Hydro pump",
                 maxDamage: 130,
                 minDamage: 110,
                 maxCount: 2,

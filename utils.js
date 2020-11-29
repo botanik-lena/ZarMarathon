@@ -1,6 +1,19 @@
 //Получение случайного числа от 0 до num
-function random(min, max) {
+export function random(min, max) {
     return Math.ceil(Math.random() * (max - min + 1)) + min;
 }
 
-export default random;
+//Счётчик нажатий  на кнопку
+export function countBtn(maxCount, button, buttonName) {
+
+    return function () {
+        maxCount--;
+
+        if (maxCount === 0) {
+            button.disabled = true;
+        }
+        button.innerText = `${buttonName} ${maxCount}`;
+
+        return maxCount;
+    }
+}

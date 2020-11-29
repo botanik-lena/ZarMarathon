@@ -1,22 +1,46 @@
 import Pokemon from "./Pokemon.js";
-import random from "./utils.js";
+import { random, countBtn } from "./utils.js";
+import { pokemons } from "./pokemons.js"
+
+
+const pikachu = pokemons.find(item => item.name === "Pikachu");
+console.log(pikachu);
+
 
 //Создание игроков
 const player1 = new Pokemon({
-    name: "Pikachu",
-    type: "electric",
-    hp: 200,
-    selectors: "character",
+    ...pikachu,
+    // name: "Pikachu",
+    // type: "electric",
+    // hp: 200,
+    selectors: "player1",
 });
-console.log(player1);
+// console.log(player1);
 
 const player2 = new Pokemon({
     name: "Charmander",
     type: "fire",
     hp: 200,
-    selectors: "enemy",
+    selectors: "player2",
 });
-console.log(player2);
+// console.log(player2);
+const $control = document.querySelector(".control");
+
+player1.attacks.forEach(item => {
+    console.log(item);
+    const $button = document.createElement("button");
+    $button.classList.add("button");
+    $button.innerText = item.name;
+    const btnCount = countBtn(item.maxCount, $button, item.name);
+
+    $button.addEventListener("click", () => {
+        console.log("Click button ", $button.innerText);
+        btnCount();
+        // $button.innerText = item.name + btnCount();
+
+    });
+    $control.appendChild($button);
+});
 
 //Объявление кнопок
 function $getElById(id) {
