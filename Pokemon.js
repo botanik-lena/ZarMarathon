@@ -31,7 +31,7 @@ class Pokemon extends Selectors {
         }
 
         this.renderHP();
-        logF && logF(count);        //сработает если придёт count
+        logF && logF(count);
     }
 
     // //Функция удара в зависимости от кол-ва букв в name игрока
