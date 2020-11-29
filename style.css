@@ -35,8 +35,8 @@ body {
 }
 
 .control {
-    width: 320px;
-    height: 260px;
+    width: 400px;
+    height: 400px;
     position: relative;
     margin: 20px;
     display: flex;

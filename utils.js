@@ -37,7 +37,7 @@ export function generateLog(firstPerson, secondPerson, loss) {        //loss - �
         `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. -${loss} [${firstDm}/${firstDf}]`
     ];
 
-    return logs[random(0, logs.length - 1) - 1];
+    return logs[random(0, logs.length - 1)];
 }
 
 //Запись действий боя в новые параграфы, где верхний параграф - последнее действие

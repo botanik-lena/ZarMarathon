@@ -39,6 +39,11 @@ function restartOpponent(gamerWin) {
     let gamers = createPlayers(pokemons);
     let gamer2 = gamers[1];
 
+    if (gamerWin.name === gamer2.name) {
+        gamers = createPlayers(pokemons);
+        gamer2 = gamer[1];
+    }
+
     renderPlayers(gamerWin, gamer2);
 }
 
