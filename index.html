@@ -16,16 +16,20 @@
             <img class="logo" title="Reset Game" src="./assets/Pokemon_logo.png" alt="Pokemon">
         </header>
 
+        <div class="startGame">
+            <button class="start button">Start Game</button>
+            <button class="reset button">Reset Game</button>
+        </div>
+
         <div class="playground">
             <div class="pokemon player1">
                 <span class="lvl">Lv. 1</span>
 
-                <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite">
+                <!-- <img src="http://sify4321.000webhostapp.com/pikachu.png" class="sprite"> -->
+                <img class="sprite" id="img-player1">
 
                 <div class="details">
-                    <h2 class="name" id="name-player1">
-                        Pikachu
-                    </h2>
+                    <h2 class="name" id="name-player1"></h2>
                     <div class="hp">
                         <div class="bar">
                             <div class="health" id="progressbar-player1" style="width: 100%;"></div>
@@ -54,12 +58,11 @@
             <div class="pokemon player2">
                 <span class="lvl">Lv. 1</span>
 
-                <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite">
+                <!-- <img src="http://sify4321.000webhostapp.com/charmander.png" class="sprite"> -->
+                <img class="sprite" id="img-player2">
 
                 <div class="details">
-                    <h2 class="name" id="name-player2">
-                        Charmander
-                    </h2>
+                    <h2 class="name" id="name-player2"></h2>
                     <div class="hp">
                         <div class="bar">
                             <div class="health" id="progressbar-player2" style="width: 100%;"></div>
@@ -69,8 +72,13 @@
                 </div>
             </div>
         </div>
-        <div id="logs" class="log">The description of the battle:</div>
+
+        <div id="logs" class="log">
+            The description of the battle:
+        </div>
+
     </div>
+
     <div class="catch_screen"></div>
 
     <script src="main.js" type="module"></script>

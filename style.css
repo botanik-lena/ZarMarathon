@@ -496,3 +496,19 @@ h1 {
 .action label {
     padding: 6px 0;
 }
+
+.start {
+    background-color: chartreuse;
+}
+
+.reset {
+    background-color: red;
+}
+
+.btnPlayer1 {
+    background-color: #f1f500;
+}
+
+.btnPlayer2 {
+    background-color: dodgerblue;
+}

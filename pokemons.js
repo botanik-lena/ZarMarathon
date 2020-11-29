@@ -3,7 +3,8 @@ export const pokemons = [
         name: 'Pikachu',
         type: 'electric',
         hp: 274,
-        img: 'http://sify4321.000webhostapp.com/pikachu.png',
+        // img: 'http://sify4321.000webhostapp.com/pikachu.png',
+        img: '/assets/pikachu.png',
         attacks: [
             {
                 name: "Thunder jolt",
@@ -32,8 +33,9 @@ export const pokemons = [
         ]
     },
     {
-        img: 'http://sify4321.000webhostapp.com/charmander.png',
         name: 'Charmander',
+        // img: 'http://sify4321.000webhostapp.com/charmander.png',
+        img: '/assets/charmander.png',
         type: 'fire',
         hp: 282,
         attacks: [
@@ -64,7 +66,8 @@ export const pokemons = [
         ]
     },
     {
-        img: 'http://sify4321.000webhostapp.com/bulbasaur.png',
+        // img: 'http://sify4321.000webhostapp.com/bulbasaur.png',
+        img: '/assets/bulbasaur.png',
         name: 'Bulbasaur',
         type: 'fire',
         hp: 294,
@@ -96,7 +99,8 @@ export const pokemons = [
         ]
     },
     {
-        img: 'http://sify4321.000webhostapp.com/squirtle.png',
+        // img: 'http://sify4321.000webhostapp.com/squirtle.png',
+        img: '/assets/squirtle.png',
         name: 'Squirtle',
         type: 'water',
         hp: 292,
@@ -128,7 +132,8 @@ export const pokemons = [
         ]
     },
     {
-        img: 'http://sify4321.000webhostapp.com/pidgey.png',
+        // img: 'http://sify4321.000webhostapp.com/pidgey.png',
+        img: '/assets/pidgey.png',
         name: 'Pidgey',
         type: 'air',
         hp: 284,
@@ -160,7 +165,8 @@ export const pokemons = [
         ]
     },
     {
-        img: 'http://sify4321.000webhostapp.com/mew.png',
+        // img: 'http://sify4321.000webhostapp.com/mew.png',
+        img: '/assets/mew.png',
         name: 'Mew',
         type: 'air',
         hp: 404,
