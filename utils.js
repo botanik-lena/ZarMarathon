@@ -17,3 +17,15 @@ export function countBtn(maxCount, button, buttonName) {
         return maxCount;
     }
 }
+
+//GenerateLog
+
+
+
+//Функция отключения всех кнопок
+export function disable() {
+    let buttons = document.querySelectorAll("button");
+    buttons.forEach((item) => {
+        item.disabled = true;
+    });
+}

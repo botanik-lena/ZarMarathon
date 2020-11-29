@@ -1,5 +1,5 @@
 import Pokemon from "./Pokemon.js";
-import { random, countBtn } from "./utils.js";
+import { random, countBtn, disable } from "./utils.js";
 import { pokemons } from "./pokemons.js"
 
 
@@ -36,11 +36,10 @@ player1.attacks.forEach(item => {
     $button.addEventListener("click", () => {
         console.log("Click button ", $button.innerText);
         btnCount();
-        // $button.innerText = item.name + btnCount();
-
     });
     $control.appendChild($button);
 });
+
 
 //Объявление кнопок
 function $getElById(id) {
@@ -233,12 +232,7 @@ function generateLog(firstPerson, secondPerson, loss) {        //loss - поте
     return logs[random(logs.length) - 1];
 }
 
-//Функция отключения всех кнопок
-function disable() {
-    $btn.disabled = true;
-    $btnDischarge.disabled = true;
-    $btnRandomize.disabled = true;
-}
+
 
 //Запуск игры
 (function init() {
