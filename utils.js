@@ -1,6 +1,6 @@
 //Получение случайного числа от 0 до num
 export function random(min, max) {
-    return Math.ceil(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 //Счётчик нажатий  на кнопку
@@ -37,15 +37,26 @@ export function generateLog(firstPerson, secondPerson, loss) {        //loss - �
         `${firstPerson.name} пытался что-то сказать, но вдруг, неожиданно ${secondPerson.name} со скуки, разбил бровь сопернику. -${loss} [${firstDm}/${firstDf}]`
     ];
 
-    return logs[random(logs.length) - 1];
+    return logs[random(0, logs.length - 1) - 1];
+}
+
+//Запись действий боя в новые параграфы, где верхний параграф - последнее действие
+export function createLog(log) {
+    const $logs = document.querySelector("#logs");
+
+    const $p = document.createElement("p");
+    $p.innerHTML = log;
+    $logs.insertBefore($p, $logs.children[0]);
+
 }
 
 
 
-//Функция отключения всех кнопок
+//Функция отключения всех кнопок, кроме reset
 export function disable() {
     let buttons = document.querySelectorAll("button");
     buttons.forEach((item) => {
         item.disabled = true;
     });
+    document.querySelector(".reset").disabled = false;
 }

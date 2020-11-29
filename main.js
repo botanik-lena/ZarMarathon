@@ -1,36 +1,61 @@
 import Pokemon from "./Pokemon.js";
-import { random, countBtn, disable, generateLog } from "./utils.js";
+import { random, countBtn, disable, generateLog, createLog } from "./utils.js";
 import { pokemons } from "./pokemons.js";
 import Game from "./Game.js";
 
 
 //Начало игры
-const $btnStart = document.querySelector(".start");
-
-$btnStart.addEventListener("click", function () {
-    $btnStart.disable = true;
+function startGame() {
+    $btnStart.disabled = true;
 
     let gamers = createPlayers(pokemons);  //массив из двух игроков, где gamers[0]-первый игрок, gamers[1]-второй
     let gamer1 = gamers[0];
     let gamer2 = gamers[1];
 
     renderPlayers(gamer1, gamer2);
-});
+}
+
+const $btnStart = document.querySelector(".start");
+$btnStart.addEventListener("click", startGame);
 
 
 //Перезапуск игры
 const $btnReset = document.querySelector(".reset");
 
+$btnReset.addEventListener("click", () => {
+    const allButtons = document.querySelectorAll('.control .button');  //не знаю почему остаются следы рамок после удаления кнопок
+    allButtons.forEach($item => $item.remove());
+    startGame();
+});
+
+
+//Перезапуск, если выиграл первый игрок - смена противника
+function restartOpponent(gamerWin) {
+    $btnStart.disabled = true;
+    const allButtons = document.querySelectorAll('.control .button');
+
+    allButtons.forEach($item => $item.remove());
+
+    let gamers = createPlayers(pokemons);
+    let gamer2 = gamers[1];
+
+    renderPlayers(gamerWin, gamer2);
+}
+
 
 //Создание рандомных игроков
 function createPlayers(arrayPlayers) {
+    let num1 = 0;
+    let num2 = 0;
+
+    while (num1 === num2) {
+        num1 = random(0, arrayPlayers.length - 1);
+        num2 = random(0, arrayPlayers.length - 1);
+    }
 
     //Рандомный выбор игроков
-    let p1 = arrayPlayers[random(0, arrayPlayers.length - 1)];
-    // console.log(p1);
-
-    let p2 = arrayPlayers[random(0, arrayPlayers.length - 1)];
-    // console.log(p2);
+    let p1 = arrayPlayers[num1];
+    let p2 = arrayPlayers[num2];
 
 
     const player1 = new Pokemon({
@@ -53,10 +78,12 @@ function createPlayers(arrayPlayers) {
 const $control = document.querySelector(".control");
 
 function renderPlayers(gamer1, gamer2) {
-    gamer1.attacks.forEach(item => {
+
+    gamer1.attacks.forEach(item => {                        //первый игрок
         const $button = document.createElement("button");
         $button.classList.add("button");
         $button.classList.add("btnPlayer1");
+        $button.disabled = true;
 
         $button.innerText = item.name;
         const btnCount = countBtn(item.maxCount, $button, item.name);
@@ -64,6 +91,19 @@ function renderPlayers(gamer1, gamer2) {
         $button.addEventListener("click", () => {
             console.log("Click button ", $button.innerText);
             btnCount();
+
+            let count = random(item.minDamage, item.maxDamage);
+
+            gamer2.changeHP(count, function (count) {
+                let log = generateLog(gamer1, gamer2, count);
+                createLog(log);
+                console.log(log);
+
+                if (gamer2.hp.damageHP === 0) {
+                    disable();
+                    restartOpponent(gamer1);
+                }
+            });
         });
 
         const $elImg = document.getElementById("img-player1");
@@ -74,16 +114,35 @@ function renderPlayers(gamer1, gamer2) {
         $control.appendChild($button);
     });
 
-    gamer2.attacks.forEach(item => {
+    gamer2.attacks.forEach(item => {                            //второй игрок
         const $button = document.createElement("button");
         $button.classList.add("button");
         $button.classList.add("btnPlayer2");
+
         $button.innerText = item.name;
         const btnCount = countBtn(item.maxCount, $button, item.name);
 
         $button.addEventListener("click", () => {
             console.log("Click button ", $button.innerText);
             btnCount();
+
+            let count = random(item.minDamage, item.maxDamage);
+
+            gamer1.changeHP(count, function (count) {
+                const log = generateLog(gamer2, gamer1, count);
+                createLog(log);
+                console.log(log);
+
+
+                let btnPlayer1 = document.querySelectorAll(".btnPlayer1");  //Разблокирует кнопки первого игрока
+                btnPlayer1.forEach(item => {
+                    item.disabled = false
+                });
+
+                if (gamer1.hp.damageHP === 0) {
+                    disable();
+                }
+            });
         });
 
         const $elImg = document.getElementById("img-player2");
