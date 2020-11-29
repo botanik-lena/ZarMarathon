@@ -21,7 +21,7 @@ class Pokemon extends Selectors {
     }
 
     //Удар Thunder Jolt
-    changeHP(count, logF) {     //changeHP = () => - вот так почему-то не работает (в Safari) и в некоторых других браузерах
+    changeHP(count, logF) {
         this.hp.damageHP -= count;
 
         if (this.hp.damageHP <= 0) {
@@ -83,6 +83,14 @@ class Pokemon extends Selectors {
         const { elProgressbar, hp: { defaultHP, damageHP } } = this;
 
         elProgressbar.style.width = ((damageHP / defaultHP) * 100) + "%";
+
+        if ((damageHP < 60) && (damageHP > 20)) {
+            elProgressbar.classList.add("low");
+        }
+
+        if (damageHP < 20) {
+            elProgressbar.classList.add("critical");
+        }
     }
 }
 
