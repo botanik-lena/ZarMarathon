@@ -35,8 +35,8 @@ body {
 }
 
 .control {
-    width: 320px;
-    height: 260px;
+    width: 450px;
+    height: 400px;
     position: relative;
     margin: 20px;
     display: flex;
@@ -495,4 +495,20 @@ h1 {
 
 .action label {
     padding: 6px 0;
+}
+
+.start {
+    background-color: chartreuse;
+}
+
+.reset {
+    background-color: red;
+}
+
+.btnPlayer1 {
+    background-color: #f1f500;
+}
+
+.btnPlayer2 {
+    background-color: dodgerblue;
 }

@@ -6,7 +6,7 @@ class Selectors {
 }
 
 class Pokemon extends Selectors {
-    constructor({ selectors, name, hp, type }) {
+    constructor({ selectors, name, hp, type, attacks = [], img }) {
         super(selectors);
 
         this.name = name;
@@ -15,12 +15,14 @@ class Pokemon extends Selectors {
             damageHP: hp,
         };
         this.type = type;
+        this.attacks = attacks;
+        this.img = img;
 
         this.renderHP();
     }
 
     //Удар Thunder Jolt
-    changeHP(count, logF) {     //changeHP = () => - вот так почему-то не работает (в Safari) и в некоторых других браузерах
+    changeHP(count, logF) {
         this.hp.damageHP -= count;
 
         if (this.hp.damageHP <= 0) {
@@ -32,37 +34,37 @@ class Pokemon extends Selectors {
         logF && logF(count);
     }
 
-    //Функция удара в зависимости от кол-ва букв в name игрока
-    discharge() {
-        const a = 10;
-        const b = 19;
+    // //Функция удара в зависимости от кол-ва букв в name игрока
+    // discharge() {
+    //     const a = 10;
+    //     const b = 19;
 
-        if ((this.name.length % 2 === 0) && (this.hp.damageHP > 10)) {
-            this.hp.damageHP -= a;
-            this.renderHP();
+    //     if ((this.name.length % 2 === 0) && (this.hp.damageHP > 10)) {
+    //         this.hp.damageHP -= a;
+    //         this.renderHP();
 
-            return a;
-        }
+    //         return a;
+    //     }
 
-        else if (this.hp.damageHP > 19) {
-            this.hp.damageHP -= b;
-            this.renderHP();
+    //     else if (this.hp.damageHP > 19) {
+    //         this.hp.damageHP -= b;
+    //         this.renderHP();
 
-            return b;
-        }
-    }
+    //         return b;
+    //     }
+    // }
 
-    //Удар Splash
-    splash() {
-        this.hp.damageHP -= 23;
+    // //Удар Splash
+    // splash() {
+    //     this.hp.damageHP -= 23;
 
-        if (this.hp.damageHP <= 0) {
-            this.hp.damageHP = 0;
-            alert(`Бедный ${this.name} проиграл бой`);
-        }
+    //     if (this.hp.damageHP <= 0) {
+    //         this.hp.damageHP = 0;
+    //         alert(`Бедный ${this.name} проиграл бой`);
+    //     }
 
-        this.renderHP();
-    }
+    //     this.renderHP();
+    // }
 
     //Отображение жизни и прогрессбара
     renderHP() {
@@ -82,6 +84,19 @@ class Pokemon extends Selectors {
         const { elProgressbar, hp: { defaultHP, damageHP } } = this;
 
         elProgressbar.style.width = ((damageHP / defaultHP) * 100) + "%";
+
+        if ((damageHP < 60) && (damageHP > 20)) {
+            elProgressbar.classList.add("low");
+        }
+
+        if (damageHP < 20) {
+            elProgressbar.classList.add("critical");
+        }
+
+        else {
+            elProgressbar.classList.remove("low");
+            elProgressbar.classList.remove("critical");
+        }
     }
 }
 
