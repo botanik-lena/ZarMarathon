@@ -88,7 +88,8 @@ function renderPlayers(gamer1, gamer2) {
         const $button = document.createElement("button");
         $button.classList.add("button");
         $button.classList.add("btnPlayer1");
-        $button.disabled = true;
+        // $button.disabled = true;
+        $button.style.visibility = "hidden";
 
         $button.innerText = item.name;
         const btnCount = countBtn(item.maxCount, $button, item.name);
@@ -101,7 +102,7 @@ function renderPlayers(gamer1, gamer2) {
 
             let btnPlayer1 = document.querySelectorAll(".btnPlayer1");  //Заблокирует кнопки первого игрока
             btnPlayer1.forEach(item => {
-                item.disabled = true;
+                item.style.visibility = "hidden";
             });
 
             gamer2.changeHP(count, function (count) {
@@ -111,7 +112,7 @@ function renderPlayers(gamer1, gamer2) {
 
                 let btnPlayer2 = document.querySelectorAll(".btnPlayer2");  //Разблокирует кнопки второго игрока
                 btnPlayer2.forEach(item => {
-                    item.disabled = false;
+                    item.style.visibility = "visible";
                 });
 
                 if (gamer2.hp.damageHP === 0) {
@@ -147,7 +148,7 @@ function renderPlayers(gamer1, gamer2) {
 
             let btnPlayer2 = document.querySelectorAll(".btnPlayer2");  //Заблокирует кнопки второго игрока
             btnPlayer2.forEach(item => {
-                item.disabled = true;
+                item.style.visibility = "hidden";
             });
 
             gamer1.changeHP(count, function (count) {
@@ -157,7 +158,7 @@ function renderPlayers(gamer1, gamer2) {
 
                 let btnPlayer1 = document.querySelectorAll(".btnPlayer1");  //Разблокирует кнопки первого игрока
                 btnPlayer1.forEach(item => {
-                    item.disabled = false;
+                    item.style.visibility = "visible";
                 });
 
                 if (gamer1.hp.damageHP === 0) {
