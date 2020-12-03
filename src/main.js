@@ -99,15 +99,26 @@ function renderPlayers(gamer1, gamer2) {
 
             let count = random(item.minDamage, item.maxDamage);
 
+            let btnPlayer1 = document.querySelectorAll(".btnPlayer1");  //Заблокирует кнопки первого игрока
+            btnPlayer1.forEach(item => {
+                item.disabled = true;
+            });
+
             gamer2.changeHP(count, function (count) {
                 let log = generateLog(gamer1, gamer2, count);
                 createLog(log);
                 console.log(log);
 
+                let btnPlayer2 = document.querySelectorAll(".btnPlayer2");  //Разблокирует кнопки второго игрока
+                btnPlayer2.forEach(item => {
+                    item.disabled = false;
+                });
+
                 if (gamer2.hp.damageHP === 0) {
                     disable();
                     restartOpponent(gamer1);
                 }
+
             });
         });
 
@@ -134,15 +145,19 @@ function renderPlayers(gamer1, gamer2) {
 
             let count = random(item.minDamage, item.maxDamage);
 
+            let btnPlayer2 = document.querySelectorAll(".btnPlayer2");  //Заблокирует кнопки второго игрока
+            btnPlayer2.forEach(item => {
+                item.disabled = true;
+            });
+
             gamer1.changeHP(count, function (count) {
                 const log = generateLog(gamer2, gamer1, count);
                 createLog(log);
                 console.log(log);
 
-
                 let btnPlayer1 = document.querySelectorAll(".btnPlayer1");  //Разблокирует кнопки первого игрока
                 btnPlayer1.forEach(item => {
-                    item.disabled = false
+                    item.disabled = false;
                 });
 
                 if (gamer1.hp.damageHP === 0) {
